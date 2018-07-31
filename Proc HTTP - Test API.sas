@@ -1,3 +1,4 @@
+﻿proc options;run;
 *--- The Main macro will execute the code to extract data from the API end points ---;
 %Macro API(Url,Bank,API);
 
@@ -12,7 +13,7 @@ Run;
 
 
 *--- The JSON engine will extract the data from the JSON script ---; 
-Libname LibAPIs JSON Fileref=API;
+Libname LibAPIs JSON Fileref=API Ordinalcount = All;
 
 *--- Proc datasets will create the datasets to examine resulting tables and structures ---;
 Proc Datasets Lib = LibAPIs; 
@@ -23,26 +24,15 @@ Data Work.&Bank._API;
 Run;
 
 %Mend API;
+%API(http://localhost/sasweb/data/temp/ob/sqm/v1_0/PCA_GB_Full.json,GB,SQM);
 /*
-%API(https://atlas.api.barclays/open-banking/v1.3/personal-current-accounts,Barclays,PCA);
-%API(https://obp-api.danskebank.com/open-banking/v1.2/atms,Danske,ATM);
+%API(http://localhost/sasweb/data/temp/ob/sqm/v1_0/astros.json,OB,SQM);
+%API(http://localhost/sasweb/data/temp/ob/sqm/v1_0/test.json,OB,SQM);
+%API(http://localhost/sasweb/data/temp/ob/sqm/v1_0/atms.json,OB,ATM);
+%API(http://localhost/sasweb/data/temp/ob/sqm/v1_0/sqm_swagger.json,OB,SQM);
+%API(http://localhost/sasweb/data/temp/ob/sqm/v1_0/pcs_gb_agg.json,OB,SQM);
 
-%API(https://api.santander.co.uk/retail/open-banking;
+
+%API(http://localhost/sasweb/data/temp/ob/sqm/v1_0/account_v1_1_swagger.json,ACC1,AC1);
+%API(http://localhost/sasweb/data/temp/ob/sqm/v1_0/account_v2_0_swagger.json,ACC2,AC2);
 */
-*%API(https://atlas.api.barclays/open-banking/v1.3/atms,Barclays,ATM);
-*%API(https://atlas.api.barclays/open-banking/v1.3/personal-current-accounts,Barclays,PCA);
-
-*%API(https://api.santander.co.uk/retail/open-banking/v1.2/atms,Santander,ATM);
-
-*%API(https://api.hsbc.com/open-banking/v1.2/personal-current-accounts,HSBC,PCA);
-
-%API(https://openapi.bankofireland.com/open-banking/v1.2/business-current-accounts,Bank_of_Ireland,BCA);
-*%API(https://openapi.bankofireland.com/open-banking/v1.2/business-current-accounts,Bank_of_Ireland,BCA);
-*%API(https://openapi.coutts.co.uk/open-banking/v1.3/business-current-accounts,Coutts,BCA);
-*%API(https://openapi.adambank.co.uk/open-banking/v1.3/business-current-accounts,Adam_Bank,BCA);
-
-
-/*
-Proc JSON Out = 'C:\inetpub\wwwroot\sasweb\data\results\test_json.json';
-	Export Work.Barclays_API;
-Run;
